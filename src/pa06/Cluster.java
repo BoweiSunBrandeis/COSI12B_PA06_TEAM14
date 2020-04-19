@@ -40,7 +40,7 @@ public class Cluster {
 	public void add(Sample sample) {
 		this.cluster.add(sample);
 	}
-	
+
 	/**
 	 * prints contents of cluster
 	 */
@@ -49,12 +49,27 @@ public class Cluster {
 			System.out.print("{");
 			for (int j = 0; j < this.cluster.get(i).sampleLength(); j++) {
 				System.out.print(this.cluster.get(i).getElement(j));
-				if(j<this.cluster.get(i).sampleLength()-1) {
+				if (j < this.cluster.get(i).sampleLength() - 1) {
 					System.out.print(", ");
 				}
 			}
 			System.out.println("}");
 		}
+	}
+	
+	
+	/**
+	 * 
+	 * @return the closest sample point
+	 */
+	public Sample closestSamplePoint() {
+		Sample result = this.cluster.get(0);
+		for (Sample i : cluster) {
+			if (result.distanceTo(this.clusterPoint) > i.distanceTo(this.clusterPoint)) {
+				result = i;
+			}
+		}
+		return result;
 	}
 
 	public static void main(String[] args) {
@@ -68,9 +83,10 @@ public class Cluster {
 		samples.add(s2);
 
 		Cluster cluster = new Cluster(samples);
-		//System.out.println(cluster.randomPick(1)[0].toString());
-		//System.out.println(cluster.randomPick(1)[0].toString());
+		// System.out.println(cluster.randomPick(1)[0].toString());
+		// System.out.println(cluster.randomPick(1)[0].toString());
 		cluster.print();
+		cluster.closestSamplePoint();
 	}
 
 }

@@ -14,11 +14,15 @@ import java.io.FileNotFoundException;
 
 public class KMeans {
 	int k;
-	ArrayList<Cluster>[] cluster;
+	/**
+	 * store a list of k clusters
+	 */
+	Cluster[] clusters;
 	Cluster originalData;
 
 	public KMeans(int k) {
 		this.k = k;
+		clusters = new Cluster[k];
 
 	}
 
@@ -46,6 +50,26 @@ public class KMeans {
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found.");
 		}
+	}
+	
+	/**
+	 * return the index of the cluster which sample is closest to
+	 * @param the Sample to reclassify
+	 * @return the index of the cluster which sample is closest to
+	 */
+	public int findClosestCluster(Sample s) {
+		int res = 0;
+		for(int i=0; i<k; i++) {
+			if(s.distanceTo(clusters[i].getClusterPoint())<s.distanceTo(clusters[res].getClusterPoint())) {
+				res = i;
+			}
+		}
+		return res;
+	}
+	
+	
+	public void reclassify() {
+		
 	}
 
 	public static void main(String[] args) {

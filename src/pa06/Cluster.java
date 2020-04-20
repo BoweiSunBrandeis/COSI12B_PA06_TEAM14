@@ -14,8 +14,14 @@ import java.util.Random;
  *
  */
 public class Cluster {
+	/**
+	 * the center of the Cluster 
+	 */
 	private Sample clusterPoint;
-	private ArrayList<Sample> cluster;
+	/**
+	 * all the Samples in the cluster
+	 */
+	ArrayList<Sample> cluster;
 
 	public Cluster(ArrayList<Sample> samples, Sample clusterPoint) {
 		this.cluster = samples;
@@ -35,6 +41,10 @@ public class Cluster {
 			res[i] = cluster.get(i);
 		}
 		return res;
+	}
+	
+	public Sample getClusterPoint() {
+		return this.clusterPoint;
 	}
 
 	public void add(Sample sample) {
@@ -57,10 +67,28 @@ public class Cluster {
 		}
 	}
 	
+	/**
+	 * find the new Sample which is the average value of all Samples in the cluster
+	 * @return the Sample with average value
+	 */
+	public Sample findAverage() {
+		double[] res = new double[clusterPoint.sampleLength()];
+		for(int i=0; i<res.length; i++) {
+			double temp = 0;
+			for(Sample s: cluster) {
+				temp += s.getElement(i);
+			}
+			double avgTemp = temp/cluster.size();
+			res[i] = avgTemp;
+		}
+		return new Sample(res);
+	}
+	
 	
 	/**
-	 * 
-	 * @return the closest sample point
+	 * return the closest Sample to the targetSample
+	 * @param targetSample
+	 * @return the closest Sample to the targetSample
 	 */
 	public Sample closestSamplePoint(Sample targetSample) {
 		Sample result = this.cluster.get(0);
@@ -73,22 +101,28 @@ public class Cluster {
 	}
 
 	public static void main(String[] args) {
-		double[] p1 = { 1.1d, 2.1d, 3.14, 2.71 };
-		double[] p2 = { 1.1, 2.1, 3.14, 1.71 };
-		double[] p3 = { 1.1, 2.1, 3.14, 1.71 };
+		double[] p1 = { 1.1d, 2.1d, 3.14, 2.71};
+		double[] p2 = { 1.1, 2.1, 3.14, 1.71};
+		double[] p3 = { 1.1, 2.1, 3.14, 1.71};
+		double[] p4 = { 10, 20, 30, 10};
 		Sample s1 = new Sample(p1);
 		Sample s2 = new Sample(p2);
 		Sample s3 = new Sample(p3);
+		Sample s4 = new Sample(p4);
 
 		ArrayList<Sample> samples = new ArrayList<Sample>();
 		samples.add(s1);
 		samples.add(s2);
+		samples.add(s3);
+		samples.add(s4);
 
 		Cluster cluster = new Cluster(samples, samples.get(0));
 		// System.out.println(cluster.randomPick(1)[0].toString());
 		// System.out.println(cluster.randomPick(1)[0].toString());
 		cluster.print();
 		System.out.println(cluster.closestSamplePoint(s3).toString());
+		System.out.println(cluster.findAverage().toString());
+		
 	}
 
 }

@@ -46,6 +46,14 @@ public class Cluster {
 	public Sample getClusterPoint() {
 		return this.clusterPoint;
 	}
+	
+	public Sample getSample(int i) {
+		return cluster.get(i);
+	}
+	
+	public int getSize() {
+		return cluster.size();
+	}
 
 	public void add(Sample sample) {
 		this.cluster.add(sample);
@@ -85,20 +93,20 @@ public class Cluster {
 	}
 	
 	
-	/**
-	 * return the closest Sample to the targetSample
-	 * @param targetSample
-	 * @return the closest Sample to the targetSample
-	 */
-	public Sample closestSamplePoint(Sample targetSample) {
-		Sample result = this.cluster.get(0);
-		for (Sample i : cluster) {
-			if (result.distanceTo(targetSample) > i.distanceTo(targetSample)) {
-				result = i;
-			}
-		}
-		return result;
-	}
+//	/**
+//	 * return the closest Sample to the targetSample
+//	 * @param targetSample
+//	 * @return the closest Sample to the targetSample
+//	 */
+//	public Sample closestSamplePoint(Sample targetSample) {
+//		Sample result = this.cluster.get(0);
+//		for (Sample i : cluster) {
+//			if (result.distanceTo(targetSample) > i.distanceTo(targetSample)) {
+//				result = i;
+//			}
+//		}
+//		return result;
+//	}
 
 	public static void main(String[] args) {
 		double[] p1 = { 1.1d, 2.1d, 3.14, 2.71};
@@ -117,10 +125,7 @@ public class Cluster {
 		samples.add(s4);
 
 		Cluster cluster = new Cluster(samples, samples.get(0));
-		// System.out.println(cluster.randomPick(1)[0].toString());
-		// System.out.println(cluster.randomPick(1)[0].toString());
 		cluster.print();
-		System.out.println(cluster.closestSamplePoint(s3).toString());
 		System.out.println(cluster.findAverage().toString());
 		
 	}

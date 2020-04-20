@@ -17,9 +17,9 @@ public class Cluster {
 	private Sample clusterPoint;
 	private ArrayList<Sample> cluster;
 
-	public Cluster(ArrayList<Sample> samples) {
+	public Cluster(ArrayList<Sample> samples, Sample clusterPoint) {
 		this.cluster = samples;
-
+		this.clusterPoint = clusterPoint;
 	}
 
 	/**
@@ -62,10 +62,10 @@ public class Cluster {
 	 * 
 	 * @return the closest sample point
 	 */
-	public Sample closestSamplePoint() {
+	public Sample closestSamplePoint(Sample targetSample) {
 		Sample result = this.cluster.get(0);
 		for (Sample i : cluster) {
-			if (result.distanceTo(this.clusterPoint) > i.distanceTo(this.clusterPoint)) {
+			if (result.distanceTo(targetSample) > i.distanceTo(targetSample)) {
 				result = i;
 			}
 		}
@@ -75,18 +75,20 @@ public class Cluster {
 	public static void main(String[] args) {
 		double[] p1 = { 1.1d, 2.1d, 3.14, 2.71 };
 		double[] p2 = { 1.1, 2.1, 3.14, 1.71 };
+		double[] p3 = { 1.1, 2.1, 3.14, 1.71 };
 		Sample s1 = new Sample(p1);
 		Sample s2 = new Sample(p2);
+		Sample s3 = new Sample(p3);
 
 		ArrayList<Sample> samples = new ArrayList<Sample>();
 		samples.add(s1);
 		samples.add(s2);
 
-		Cluster cluster = new Cluster(samples);
+		Cluster cluster = new Cluster(samples, samples.get(0));
 		// System.out.println(cluster.randomPick(1)[0].toString());
 		// System.out.println(cluster.randomPick(1)[0].toString());
 		cluster.print();
-		cluster.closestSamplePoint();
+		System.out.println(cluster.closestSamplePoint(s3).toString());
 	}
 
 }

@@ -13,10 +13,12 @@ import java.io.FileNotFoundException;
  */
 
 public class KMeans {
+	int k;
 	ArrayList<Cluster>[] cluster;
 	Cluster originalData;
 
-	public KMeans() {
+	public KMeans(int k) {
+		this.k = k;
 
 	}
 
@@ -53,6 +55,11 @@ public class KMeans {
 		String filename = in.nextLine();
 		System.out.print("Num of clusters: ");
 		int numClusters = in.nextInt();
+		
+		// build the cluster
+		KMeans kMeans = new KMeans(numClusters);
+		
+		
 	}
 
 }
